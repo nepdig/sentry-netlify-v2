@@ -1,0 +1,53 @@
+{
+    "name": "@neptune.digital/sentry-netlify-v2",
+    "version": "1.0.0",
+    "description": "Use Sentry with Netlify Functions v2.",
+    "type": "module",
+    "main": "./dist/index.js",
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "tsup-node",
+        "lint": "eslint ./lib",
+        "format": "prettier --write ."
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nepdig/sentry-netlify-v2.git"
+    },
+    "keywords": [
+        "sentry.io",
+        "monitoring",
+        "apm",
+        "netlify",
+        "faas"
+    ],
+    "author": "Mike Gillis <mg@neptune.digital> (https://neptune.digital)",
+    "license": "AGPL-3.0-only",
+    "dependencies": {
+        "@netlify/functions": "^2.8.2",
+        "@sentry/aws-serverless": "^8.34.0"
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.12.0",
+        "@types/node": "^22.7.5",
+        "eslint": "^9.12.0",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-plugin-prettier": "^5.2.1",
+        "globals": "^15.11.0",
+        "prettier": "^3.3.3",
+        "tsup": "^8.3.0",
+        "typescript": "^5.6.3",
+        "typescript-eslint": "^8.9.0"
+    },
+    "contributors": [
+        "Mike Gillis <mg@neptune.digital> (https://neptune.digital)"
+    ],
+    "bugs": {
+        "url": "https://github.com/nepdig/sentry-netlify-v2/issues"
+    },
+    "homepage": "https://github.com/nepdig/sentry-netlify-v2"
+}

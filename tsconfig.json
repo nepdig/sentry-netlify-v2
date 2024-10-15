@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+      "target": "es2016",
+      "module": "node16",
+      "strict": true,
+      // deliberately no value for the next two as suggested by TS
+      // "esModuleInterop":
+      // "allowSyntheticDefaultImports":
+      "declaration": true,
+      "sourceMap": true,
+      "declarationMap": true,
+      "verbatimModuleSyntax": true,
+      "noImplicitAny": true,
+      "noImplicitThis": true,
+      "strictFunctionTypes": true,
+      "strictNullChecks": true,
+      "types": [],
+      "noEmit": true,
+      "forceConsistentCasingInFileNames": true
+    },
+    "include": ["lib/**/*"],
+  }
