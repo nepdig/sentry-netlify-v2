@@ -1,5 +1,6 @@
 import type { Context } from "@netlify/functions";
 import * as Sentry from "@sentry/aws-serverless";
+import { fileURLToPath } from "url";
 import { basename } from "path";
 
 type NetlifyHandlerV2 = (
@@ -52,6 +53,8 @@ export const withSentryAsBackgroundTask = (
     }
   });
 };
+
+const __filename = fileURLToPath(import.meta.url);
 
 const extractFileBaseNameFromPathRegex = /([^/]+)\.[^.]+$/;
 
