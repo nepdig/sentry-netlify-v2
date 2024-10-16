@@ -1,5 +1,7 @@
 # netlify-sentry-v2
 
+![npm package](https://img.shields.io/npm/v/@neptune.digital/sentry-netlify-v2)
+
 ## Installation
 
 1. Enable the [Netlify Sentry Integration](https://www.netlify.com/integrations/sentry/).
