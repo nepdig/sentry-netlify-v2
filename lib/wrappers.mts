@@ -1,7 +1,5 @@
 import type { Context } from "@netlify/functions";
 import * as Sentry from "@sentry/aws-serverless";
-import { fileURLToPath } from "url";
-import { basename } from "path";
 
 type NetlifyHandlerV2 = (
   req: Request,
@@ -54,16 +52,28 @@ export const withSentryAsBackgroundTask = (
   });
 };
 
-const __filename = fileURLToPath(import.meta.url);
-
 const extractFileBaseNameFromPathRegex = /([^/]+)\.[^.]+$/;
 
 export const withSentry = (handler: NetlifyHandlerV2): NetlifyHandlerV2 => {
   return (req: Request, netlifyContext: Context) => {
     const urlObject = new URL(req.url);
+    let fileName: string | undefined;
+    try {
+      fileName = __filename;
+    } catch {
+      try {
+        fileName = import.meta.filename;
+      } catch {
+        fileName = undefined;
+      }
+    }
     const functionName =
-      extractFileBaseNameFromPathRegex.exec(__filename)?.[1] ??
-      basename(__filename);
+      fileName && extractFileBaseNameFromPathRegex.exec(fileName)?.[1];
+    const functionSpanName =
+      functionName ??
+      extractFileBaseNameFromPathRegex.exec(urlObject.pathname)?.[1] ??
+      urlObject.pathname ??
+      "";
 
     const processResult = () => {
       let rv: ReturnType<typeof handler>;
@@ -80,7 +90,7 @@ export const withSentry = (handler: NetlifyHandlerV2): NetlifyHandlerV2 => {
     const functionSpan = () => {
       return Sentry.startSpanManual(
         {
-          name: functionName,
+          name: functionSpanName,
           op: "function.netlify",
           attributes: {
             "faas.name": functionName,
@@ -89,7 +99,7 @@ export const withSentry = (handler: NetlifyHandlerV2): NetlifyHandlerV2 => {
             "faas.trigger": "http",
             "sentry.source": "component",
             "sentry.origin": "auto.function.netlify",
-            "code.filepath": __filename,
+            "code.filepath": fileName,
           },
         },
         (span) =>

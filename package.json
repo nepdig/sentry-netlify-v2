@@ -1,6 +1,6 @@
 {
     "name": "@neptune.digital/sentry-netlify-v2",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Use Sentry with Netlify Functions v2.",
     "type": "module",
     "main": "./dist/index.js",
