@@ -1,6 +1,5 @@
 import * as Sentry from "@sentry/aws-serverless";
-
-const VERSION = "1.0.0";
+import * as packageJson from "../package.json";
 
 Sentry.init({
   dsn: process.env.SENTRY_DSN,
@@ -16,10 +15,10 @@ Sentry.init({
         },
         {
           name: "npm:@neptune.digital/sentry-netlify-v2",
-          version: VERSION,
+          version: packageJson.default.version,
         },
       ],
-      version: VERSION,
+      version: packageJson.default.version,
     },
   },
 });

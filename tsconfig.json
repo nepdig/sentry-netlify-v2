@@ -16,7 +16,8 @@
       "strictNullChecks": true,
       "types": [],
       "noEmit": true,
-      "forceConsistentCasingInFileNames": true
+      "forceConsistentCasingInFileNames": true,
+      "resolveJsonModule": true
     },
     "include": ["lib/**/*"],
   }
