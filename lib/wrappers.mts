@@ -8,6 +8,14 @@ type NetlifyHandlerV2 = (
 
 const FLUSH_TIMEOUT_MS = 2000;
 
+function getEnvironment(req: Request, netlifyContext: Context): string {
+  let environment = netlifyContext.deploy.context;
+  if (environment === "branch-deploy") {
+    environment = new URL(req.url).hostname.split(".")[0];
+  }
+  return environment;
+}
+
 export const withSentryAsBackgroundTask = (
   monitorSlug: string,
   handler: NetlifyHandlerV2
@@ -15,10 +23,11 @@ export const withSentryAsBackgroundTask = (
   return withSentry(async (req, netlifyContext) => {
     Sentry.getActiveSpan()?.setAttribute("faas.trigger", "timer");
     const startTime = performance.now();
+
     const checkInDescription = {
       monitorSlug,
       release: netlifyContext.deploy.id,
-      environment: netlifyContext.deploy.context,
+      environment: getEnvironment(req, netlifyContext),
     };
 
     Sentry.captureCheckIn({
@@ -100,6 +109,8 @@ export const withSentry = (handler: NetlifyHandlerV2): NetlifyHandlerV2 => {
             "sentry.source": "component",
             "sentry.origin": "auto.function.netlify",
             "code.filepath": fileName,
+            environment: getEnvironment(req, netlifyContext),
+            release: netlifyContext.deploy.id,
           },
         },
         (span) =>
@@ -134,6 +145,8 @@ export const withSentry = (handler: NetlifyHandlerV2): NetlifyHandlerV2 => {
             "sentry.source": "url",
             "sentry.origin": "auto.function.netlify",
             "http.query": urlObject.search,
+            environment: getEnvironment(req, netlifyContext),
+            release: netlifyContext.deploy.id,
           },
         },
         async (span) => {
@@ -192,7 +205,7 @@ export const withSentry = (handler: NetlifyHandlerV2): NetlifyHandlerV2 => {
         "cloud.platform": "netlify_functions",
       });
       scope.setTags({
-        environment: netlifyContext.deploy.context,
+        environment: getEnvironment(req, netlifyContext),
         release: netlifyContext.deploy.id,
         server_name: netlifyContext.url?.hostname || urlObject.hostname,
       });
