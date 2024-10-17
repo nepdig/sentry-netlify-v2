@@ -4,13 +4,14 @@
 
 ## Installation
 
-1. Enable the [Netlify Sentry Integration](https://www.netlify.com/integrations/sentry/).
-   Make sure your DSN is set. This will propagate the right environment variables into 
-   your runtime environments.
+1. Either:
+   a) Set the SENTRY_DSN environment variable in your site configuration, or
+   b) Enable the [Netlify Sentry Integration](https://www.netlify.com/integrations/sentry/),
+   and make sure your DSN is set in the UI. (This does the same thing.)
 
-2. npm i @neptune.digital/netlify-sentry-v2
+2. `npm i @neptune.digital/netlify-sentry-v2`
 
-3. Use it!
+3. Use it in your functions as shown below.
 
 ## Usage
 
@@ -45,3 +46,6 @@ export const config: Config = {
   schedule: "*/5 * * * *", // cron format. every 5 minutes
 };
 ```
+
+Note that this doesn't change anything about the function, so you can use it 
+on any function that you want to do a cron check-in call to Sentry.
