@@ -30,7 +30,7 @@ export const withSentryAsBackgroundTask = (
       environment: getEnvironment(req, netlifyContext),
     };
 
-    Sentry.captureCheckIn({
+    const checkInId = Sentry.captureCheckIn({
       ...checkInDescription,
       status: "in_progress",
     });
@@ -39,6 +39,7 @@ export const withSentryAsBackgroundTask = (
       try {
         Sentry.captureCheckIn({
           ...checkInDescription,
+          checkInId,
           status: "ok",
           duration: (performance.now() - startTime) / 1000.0,
         });
@@ -50,6 +51,7 @@ export const withSentryAsBackgroundTask = (
       try {
         Sentry.captureCheckIn({
           ...checkInDescription,
+          checkInId,
           status: "error",
           duration: (performance.now() - startTime) / 1000.0,
         });
