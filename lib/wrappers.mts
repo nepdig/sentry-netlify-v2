@@ -67,6 +67,12 @@ const extractFileBaseNameFromPathRegex = /([^/]+)\.[^.]+$/;
 
 export const withSentry = (handler: NetlifyHandlerV2): NetlifyHandlerV2 => {
   return (req: Request, netlifyContext: Context) => {
+    Sentry.getClient()?.addEventProcessor((event) => {
+      event.environment = getEnvironment(req, netlifyContext);
+      event.release = netlifyContext.deploy.id;
+      return event;
+    });
+
     const urlObject = new URL(req.url);
     let fileName: string | undefined;
     try {
@@ -111,8 +117,6 @@ export const withSentry = (handler: NetlifyHandlerV2): NetlifyHandlerV2 => {
             "sentry.source": "component",
             "sentry.origin": "auto.function.netlify",
             "code.filepath": fileName,
-            environment: getEnvironment(req, netlifyContext),
-            release: netlifyContext.deploy.id,
           },
         },
         (span) =>
@@ -147,8 +151,6 @@ export const withSentry = (handler: NetlifyHandlerV2): NetlifyHandlerV2 => {
             "sentry.source": "url",
             "sentry.origin": "auto.function.netlify",
             "http.query": urlObject.search,
-            environment: getEnvironment(req, netlifyContext),
-            release: netlifyContext.deploy.id,
           },
         },
         async (span) => {
