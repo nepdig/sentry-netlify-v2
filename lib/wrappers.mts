@@ -3,7 +3,7 @@ import * as Sentry from "@sentry/aws-serverless";
 
 type NetlifyHandlerV2 = (
   req: Request,
-  context: Context
+  context: Context,
 ) => Promise<Response | undefined>;
 
 const FLUSH_TIMEOUT_MS = 2000;
@@ -18,7 +18,7 @@ function getEnvironment(req: Request, netlifyContext: Context): string {
 
 export const withSentryAsBackgroundTask = (
   monitorSlug: string,
-  handler: NetlifyHandlerV2
+  handler: NetlifyHandlerV2,
 ): NetlifyHandlerV2 => {
   return withSentry(async (req, netlifyContext) => {
     Sentry.getActiveSpan()?.setAttribute("faas.trigger", "timer");
@@ -131,7 +131,7 @@ export const withSentry = (handler: NetlifyHandlerV2): NetlifyHandlerV2 => {
             })
             .finally(() => {
               span.end();
-            })
+            }),
       );
     };
 
@@ -187,7 +187,7 @@ export const withSentry = (handler: NetlifyHandlerV2): NetlifyHandlerV2 => {
             .finally(() => {
               span.end();
             });
-        }
+        },
       );
 
     const httpSpanWithTrace = () =>
@@ -196,12 +196,12 @@ export const withSentry = (handler: NetlifyHandlerV2): NetlifyHandlerV2 => {
           sentryTrace: req.headers.get("sentry-trace") || undefined,
           baggage: req.headers.get("baggage"),
         },
-        httpSpan
+        httpSpan,
       );
 
     return Sentry.withIsolationScope((scope) => {
       scope.setTransactionName(functionName);
-      scope.setContext("netlify", netlifyContext);
+      scope.setContext("netlify", { ...netlifyContext });
       scope.setContext("cloud_resource", {
         "cloud.provider": "netlify",
         "cloud.account.id": netlifyContext.account.id,
