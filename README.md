@@ -22,8 +22,8 @@ import { withSentry } from "@neptune.digital/netlify-sentry-v2";
 import type { Context } from "@netlify/functions";
 
 export default withSentry(async (req: Request, context: Context) => {
-    // blah blah function goes here
-    return new Response("wow", {status: 200});
+  // blah blah function goes here
+  return new Response("wow", { status: 200 });
 });
 ```
 
@@ -36,16 +36,16 @@ import { withSentryAsBackgroundTask } from "@neptune.digital/netlify-sentry-v2";
 import type { Config, Context } from "@netlify/functions";
 
 export default withSentryAsBackgroundTask(
-    "your-sentry-cron-slug",
-    async (req: Request, context: Context) => {
-        return new Response("wow, at some scheduled time", {status: 200});
-});
-
+  "your-sentry-cron-slug",
+  async (req: Request, context: Context) => {
+    return new Response("wow, at some scheduled time", { status: 200 });
+  },
+);
 
 export const config: Config = {
   schedule: "*/5 * * * *", // cron format. every 5 minutes
 };
 ```
 
-Note that this doesn't change anything about the function, so you can use it 
+Note that this doesn't change anything about the function, so you can use it
 on any function that you want to do a cron check-in call to Sentry.
