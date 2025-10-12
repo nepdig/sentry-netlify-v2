@@ -9,6 +9,7 @@
   "files": [
     "dist"
   ],
+  "packageManager": "pnpm@10.18.2",
   "scripts": {
     "build": "tsup-node",
     "lint": "eslint ./lib",
