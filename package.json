@@ -1,6 +1,6 @@
 {
     "name": "@neptune.digital/sentry-netlify-v2",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "description": "Use Sentry with Netlify Functions v2.",
     "type": "module",
     "main": "./dist/index.js",
@@ -28,20 +28,20 @@
     "author": "Mike Gillis <mg@neptune.digital> (https://neptune.digital)",
     "license": "AGPL-3.0-only",
     "dependencies": {
-        "@netlify/functions": "^3.0.4",
-        "@sentry/aws-serverless": "^9.7.0"
+        "@netlify/functions": "4.3.0",
+        "@sentry/aws-serverless": "10.19.0"
     },
     "devDependencies": {
-        "@eslint/js": "^9.22.0",
-        "@types/node": "^22.13.11",
-        "eslint": "^9.22.0",
-        "eslint-config-prettier": "^10.1.1",
-        "eslint-plugin-prettier": "^5.2.3",
-        "globals": "^16.0.0",
-        "prettier": "^3.5.3",
-        "tsup": "^8.4.0",
-        "typescript": "^5.8.2",
-        "typescript-eslint": "^8.27.0"
+        "@eslint/js": "^9.37.0",
+        "@types/node": "^22.18.10",
+        "eslint": "^9.37.0",
+        "eslint-config-prettier": "^10.1.8",
+        "eslint-plugin-prettier": "^5.5.4",
+        "globals": "^16.4.0",
+        "prettier": "^3.6.2",
+        "tsup": "^8.5.0",
+        "typescript": "^5.9.3",
+        "typescript-eslint": "^8.46.0"
     },
     "contributors": [
         "Mike Gillis <mg@neptune.digital> (https://neptune.digital)"
