@@ -2,6 +2,8 @@
 
 ![npm package](https://img.shields.io/npm/v/@neptune.digital/sentry-netlify-v2)
 
+This repo has been archived - I found sentry wasn't very good for my needs, and mostly created a lot of noise. I think this probably works, though.
+
 ## Installation
 
 1. Either:
